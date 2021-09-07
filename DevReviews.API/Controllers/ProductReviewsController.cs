@@ -21,7 +21,7 @@ namespace DevReviews.API.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int productId, int id)
+        public async Task<IActionResult> GetById(int id)
         {
             var productReview = await _repository.GetReviewByIdAsync(id);
 

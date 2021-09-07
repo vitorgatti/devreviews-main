@@ -6,7 +6,9 @@ namespace DevReviews.API.Persistence
 {
     public class DevReviewsDbContext : DbContext
     {
-        public DevReviewsDbContext(DbContextOptions<DevReviewsDbContext> options) : base(options) { }
+        public DevReviewsDbContext(DbContextOptions<DevReviewsDbContext> options) : base(options)
+        {
+        }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
@@ -18,18 +20,12 @@ namespace DevReviews.API.Persistence
                 p.ToTable("tb_Product");
                 p.HasKey(p => p.Id);
 
-                p.Property(e => e.Title)
-                    .HasMaxLength(100);
-
-                p.Property(e => e.Description)
-                    .HasMaxLength(500);
-
-                p.HasMany(pp => pp.Reviews)
-                  .WithOne()
-                  .HasForeignKey(r => r.ProductId)
-                  .OnDelete(DeleteBehavior.Restrict);
+                p
+                    .HasMany(pp => pp.Reviews)
+                    .WithOne()
+                    .HasForeignKey(r => r.ProductId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
-
 
             modelBuilder.Entity<ProductReview>(pr =>
             {
@@ -39,9 +35,6 @@ namespace DevReviews.API.Persistence
                 pr.Property(p => p.Author)
                     .HasMaxLength(50)
                     .IsRequired();
-
-                pr.Property(p => p.Comments)
-                    .HasMaxLength(200);
             });
         }
     }
